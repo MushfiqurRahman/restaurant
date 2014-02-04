@@ -110,3 +110,4 @@ CakeLog::config('error', array(
 
 Configure::write('BaseURL', 'http://localhost/Working/restaurant/');
 
+//simple change in bootstrap.php

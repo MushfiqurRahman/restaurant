@@ -77,4 +77,5 @@ class DATABASE_CONFIG {
 		'prefix' => '',
 		//'encoding' => 'utf8',
 	);
+        //simple change in database.php file
 }
