@@ -108,5 +108,5 @@ CakeLog::config('error', array(
 	'file' => 'error',
 ));
 
-Configure::write('BaseURL', 'http://localhost/mushfiqur/restaurant/');
+Configure::write('BaseURL', 'http://localhost/Working/restaurant/');
 

@@ -58,10 +58,10 @@ class DATABASE_CONFIG {
 	public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
-		//'host' => '127.0.0.1',
-                'host' => 'localhost',
+		'host' => '127.0.0.1',
+                // 'host' => 'localhost',
 		'login' => 'root',
-		'password' => '1111',
+		'password' => 'root',
 		'database' => '2014_restaurant',
 		'prefix' => '',
 		//'encoding' => 'utf8',
