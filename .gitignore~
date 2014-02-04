@@ -3,6 +3,7 @@
 /nbproject/
 /app/Config/database.php
 /app/Config/bootstrap.php
+/app/webroot/uploads
 /app/tmp
 /lib/Cake/Console/Templates/skel/tmp/
 /plugins
