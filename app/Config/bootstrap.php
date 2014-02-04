@@ -110,3 +110,4 @@ CakeLog::config('error', array(
 
 Configure::write('BaseURL', 'http://localhost/mushfiqur/restaurant/');
 
+//simple change in bootstrap.php

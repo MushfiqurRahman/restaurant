@@ -34,17 +34,15 @@ App::uses('Model', 'Model');
 class AppModel extends Model {
 
 	/**
-	*
-	*
-	*
-	*/
-	
+         * 
+         * @param type $fileProperty
+         * @return string
+         */
 	public function moveFile($fileProperty=Null) {
 		$response['success'] = true;
 		$renamed_file_name = time().'_'.$fileProperty['name'];
 		// move_uploaded_file($fileProperty['tmp_name'], WWW_ROOT.DS.'uploads'.DS.$renamed_file_name);
 		if(move_uploaded_file($fileProperty['tmp_name'], WWW_ROOT.DS.'uploads'.DS.$renamed_file_name)) {
-
 			$response['message'] = $renamed_file_name;
 		}else {
 			$response['success'] = false;
@@ -52,5 +50,9 @@ class AppModel extends Model {
 		}
 		return $response;
 	}
+        
+        public function createThumb(){
+            //just changed
+        }
 }
 
