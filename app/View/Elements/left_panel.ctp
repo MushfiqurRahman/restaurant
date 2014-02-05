@@ -21,6 +21,15 @@
 					'waiters' => 'Waiter', 'ads' => 'Advertisement', 'tables' => 'Table',
 					'settings' => 'Setting');
 		// pr($cntlr_name);
-		echo $this->Html->link(__('Add New '.$models[$cntlr_name]), array('controller' => $cntlr_name, 'action' => 'add')); ?></li>
+		echo $this->Html->link(__('Add New '.$models[$cntlr_name]), array('controller' => $cntlr_name, 'action' => 'add')); ?>
+                </li>
+                <li><?php
+                    echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')); ?>
+                </li>
+                
 	</ul>
+    
+        
+		
+	
 </div>

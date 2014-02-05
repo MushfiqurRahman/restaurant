@@ -71,17 +71,15 @@ class MenusController extends AppController {
 			// pr($this->request->data);
 			if($this->request->data['Menu']['img']['error'] == 4) {
 				unset($this->request->data['Menu']['img']);
-
-
 			}else {
 				$response = $this->Menu->moveFile($this->request->data['Menu']['img']);	
+
 				if($response[0]['success']) {
 					$this->request->data['Menu']['img'] = $response[0]['message'];	
 					
 				}else {
 					$this->Session->setFlash(__('The Menu could not be saved. Please, try again.'));
 				}
-
 			}
 			if ($this->Menu->save($this->request->data)) {
 				$this->Session->setFlash(__('The Menu has been saved'));
@@ -89,7 +87,6 @@ class MenusController extends AppController {
 			} else {
 				$this->Session->setFlash(__('The Menu could not be saved. Please, try again.'));
 			}
-
 		} else {
 			$options = array('conditions' => array('Menu.' . $this->Menu->primaryKey => $id));
 			$this->request->data = $this->Menu->find('first', $options);
