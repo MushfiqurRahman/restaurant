@@ -85,7 +85,11 @@ class UsersController extends AppController {
  */
 	public function add() {
 		if ($this->request->is('post')) {
-			$this->request->data['User']['password'] = $this->Auth->password($this->request->data['User']['password']);
+                    //if( $this->request->data['User']['password']==$this->request->data['User']['confirm_password'] ){
+                        
+                        //unset($this->request->data['User']['confirm_password']);
+			//$this->request->data['User']['password'] = $this->Auth->password($this->request->data['User']['password']);
+                        
 			$this->User->create();
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__('The user has been saved'));
@@ -93,6 +97,7 @@ class UsersController extends AppController {
 			} else {
 				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
 			}
+                    //}
 		}
 	}
 
@@ -103,7 +108,7 @@ class UsersController extends AppController {
  * @param string $id
  * @return void
  */
-	public function edit($id = null) {
+    public function edit($id = null) {
 		if (!$this->User->exists($id)) {
 			throw new NotFoundException(__('Invalid user'));
 		}
@@ -117,6 +122,7 @@ class UsersController extends AppController {
 		} else {
 			$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
 			$this->request->data = $this->User->find('first', $options);
+                        unset($this->request->data['User']['password']);
 		}
 	}
 

@@ -46,7 +46,9 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 
 			<?php 
 				echo $this->Session->flash();
-			 	echo $this->element('left_panel');
+                                if( $this->request->params['action']!='login'){
+                                    echo $this->element('left_panel');
+                                }
 			 	echo $this->fetch('content'); 
 			?>
 		</div>
