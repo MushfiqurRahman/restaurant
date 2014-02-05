@@ -41,8 +41,8 @@ class MenusController extends AppController {
 		if ($this->request->is('post')) {
 
 			$response = $this->Menu->moveFile($this->request->data['Menu']['img']);
-			if($response['success']) {
-				$this->request->data['Menu']['img'] = $response['message'];
+			if($response[0]['success']) {
+				$this->request->data['Menu']['img'] = $response[0]['message'];
                                 //pr($this->request->data);exit;
 				$this->Menu->create();
 				if ($this->Menu->save($this->request->data)) {
@@ -75,8 +75,8 @@ class MenusController extends AppController {
 
 			}else {
 				$response = $this->Menu->moveFile($this->request->data['Menu']['img']);	
-				if($response['success']) {
-					$this->request->data['Menu']['img'] = $response['message'];	
+				if($response[0]['success']) {
+					$this->request->data['Menu']['img'] = $response[0]['message'];	
 					
 				}else {
 					$this->Session->setFlash(__('The Menu could not be saved. Please, try again.'));
