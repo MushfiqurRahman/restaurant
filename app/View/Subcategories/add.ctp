@@ -7,7 +7,6 @@
 		echo $this->Form->input('title');
 		echo $this->Form->input('descr');
 		echo $this->Form->input('img',array('type' => 'file'));
-		echo $this->Form->input('Item');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

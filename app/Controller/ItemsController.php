@@ -41,8 +41,9 @@ class ItemsController extends AppController {
 		if ($this->request->is('post')) {
 			
 			$response = $this->Item->moveFile($this->request->data['Item']['img']);
-			if($response['success']) {
-				$this->request->data['Item']['img'] = $response['message'];
+			if($response[0]['success']) {
+				$this->request->data['Item']['img'] = $response[0]['message'];
+                                $this->request->data['Item']['thumb_img'] = $response[1]['message'];
 				$this->Item->create();
 				if ($this->Item->save($this->request->data)) {
 					$this->Session->setFlash(__('The Item has been saved'));
@@ -75,8 +76,9 @@ class ItemsController extends AppController {
 
 			}else {
 				$response = $this->Item->moveFile($this->request->data['Item']['img']);	
-				if($response['success']) {
-					$this->request->data['Item']['img'] = $response['message'];
+				if($response[0]['success']) {
+					$this->request->data['Item']['img'] = $response[0]['message'];
+                                        $this->request->data['Item']['thumb_img'] = $response[1]['message'];
 					
 					if ($this->Item->save($this->request->data)) {
 						$this->Session->setFlash(__('The Item has been saved'));

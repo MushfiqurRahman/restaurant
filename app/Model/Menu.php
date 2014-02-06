@@ -54,24 +54,21 @@ class Menu extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * hasMany associations
- *
- * @var array
- */
-	public $hasMany = array(
+        public $hasAndBelongsToMany = array(
 		'Category' => array(
 			'className' => 'Category',
+			'joinTable' => 'categories_menus',
 			'foreignKey' => 'menu_id',
-			'dependent' => false,
+			'associationForeignKey' => 'category_id',
+			'unique' => 'keepExisting',
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
 			'limit' => '',
 			'offset' => '',
-			'exclusive' => '',
 			'finderQuery' => '',
-			'counterQuery' => ''
+			'deleteQuery' => '',
+			'insertQuery' => ''
 		)
 	);
 

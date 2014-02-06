@@ -13,7 +13,6 @@ class CategoriesController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->Category->recursive = 0;
 		$this->set('categories', $this->paginate());
 	}
 
@@ -29,6 +28,7 @@ class CategoriesController extends AppController {
 			throw new NotFoundException(__('Invalid category'));
 		}
 		$options = array('conditions' => array('Category.' . $this->Category->primaryKey => $id));
+                //pr( $this->Category->find('first', $options));
 		$this->set('category', $this->Category->find('first', $options));
 	}
 
@@ -38,11 +38,13 @@ class CategoriesController extends AppController {
  * @return void
  */
 	public function add() {
-		if ($this->request->is('post')) {
+		if ($this->request->is('post')) { //pr($this->data);exit;
 			$response = $this->Category->moveFile($this->request->data['Category']['img']);
-			if($response['success']) {
-				$this->request->data['Category']['img'] = $response['message'];
-				$this->Category->create();
+			if($response[0]['success']) {
+				$this->request->data['Category']['img'] = $response[0]['message'];
+                                $this->request->data['Category']['thumb_img'] = $response[1]['message'];
+				
+                                $this->Category->create();
 				if ($this->Category->save($this->request->data)) {
 					$this->Session->setFlash(__('The Category has been saved'));
 					$this->redirect(array('action' => 'index'));
@@ -68,22 +70,22 @@ class CategoriesController extends AppController {
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			
-			if(!$this->request->data['Category']['img']) {
+			if($this->request->data['Category']['img']['error']==4) {
 				unset($this->request->data['Category']['img']);
 
 			}else {
 				$response = $this->Category->moveFile($this->request->data['Category']['img']);	
-				if($response['success']) {
-					$this->request->data['Category']['img'] = $response['message'];
-					
-					if ($this->Category->save($this->request->data)) {
-						$this->Session->setFlash(__('The Category has been saved'));
-						$this->redirect(array('action' => 'index'));
-					} else {
-						$this->Session->setFlash(__('The Category could not be saved. Please, try again.'));
-					}
+				if($response[0]['success']) {
+					$this->request->data['Category']['img'] = $response[0]['message'];
+                                        $this->request->data['Category']['thumb_img'] = $response[1]['message'];					
 				}
-			}
+			}                        
+                        if ($this->Category->save($this->request->data)) {
+                                $this->Session->setFlash(__('The Category has been saved'));
+                                $this->redirect(array('action' => 'index'));
+                        } else {
+                                $this->Session->setFlash(__('The Category could not be saved. Please, try again.'));
+                        }
 
 
 		} else {

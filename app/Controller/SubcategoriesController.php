@@ -41,8 +41,9 @@ class SubcategoriesController extends AppController {
 		if ($this->request->is('post')) {
 			
 			$response = $this->Subcategory->moveFile($this->request->data['Subcategory']['img']);
-			if($response['success']) {
-				$this->request->data['Subcategory']['img'] = $response['message'];
+			if($response[0]['success']) {
+				$this->request->data['Subcategory']['img'] = $response[0]['message'];
+                                $this->request->data['Subcategory']['thumb_img'] = $response[1]['message'];
 				$this->Subcategory->create();
 				if ($this->Subcategory->save($this->request->data)) {
 					$this->Session->setFlash(__('The Subcategory has been saved'));
@@ -77,8 +78,9 @@ class SubcategoriesController extends AppController {
 
 			}else {
 				$response = $this->Subcategory->moveFile($this->request->data['Subcategory']['img']);	
-				if($response['success']) {
-					$this->request->data['Subcategory']['img'] = $response['message'];
+				if($response[0]['success']) {
+					$this->request->data['Subcategory']['img'] = $response[0]['message'];
+                                        $this->request->data['Subcategory']['thumb_img'] = $response[1]['message'];
 					
 					if ($this->Subcategory->save($this->request->data)) {
 						$this->Session->setFlash(__('The Subcategory has been saved'));

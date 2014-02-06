@@ -3,7 +3,6 @@
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
-			<th><?php echo $this->Paginator->sort('menu_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('title'); ?></th>
 			<th><?php echo $this->Paginator->sort('descr'); ?></th>
 			<th><?php echo $this->Paginator->sort('img'); ?></th>
@@ -12,9 +11,6 @@
 	<?php foreach ($categories as $category): ?>
 	<tr>
 		<td><?php echo h($category['Category']['id']); ?>&nbsp;</td>
-		<td>
-			<?php echo $this->Html->link($category['Menu']['title'], array('controller' => 'menus', 'action' => 'view', $category['Menu']['id'])); ?>
-		</td>
 		<td><?php echo h($category['Category']['title']); ?>&nbsp;</td>
 		<td><?php echo h($category['Category']['descr']); ?>&nbsp;</td>
 		<td><?php echo $this->Html->image(Configure::read('BaseURL').'uploads/'.$category['Category']['img'], array('height' => 80, 'width' => 100)); ?>&nbsp;</td>

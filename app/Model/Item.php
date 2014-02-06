@@ -71,30 +71,19 @@ class Item extends AppModel {
 			),
 		),
 	);
-
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
-
-/**
- * hasAndBelongsToMany associations
+        
+        /**
+ * belongsTo associations
  *
  * @var array
  */
-	public $hasAndBelongsToMany = array(
+	public $belongsTo = array(
 		'Subcategory' => array(
 			'className' => 'Subcategory',
-			'joinTable' => 'items_subcategories',
-			'foreignKey' => 'item_id',
-			'associationForeignKey' => 'subcategory_id',
-			'unique' => 'keepExisting',
+			'foreignKey' => 'subcategory_id',
 			'conditions' => '',
 			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => ''
+			'order' => ''
 		)
 	);
-
 }

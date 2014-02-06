@@ -7,9 +7,19 @@
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Menu'); ?></dt>
-		<dd>
-			<?php echo $this->Html->link($category['Menu']['title'], array('controller' => 'menus', 'action' => 'view', $category['Menu']['id'])); ?>
-			&nbsp;
+		<dd>                    
+                    <?php
+                        if(!empty($category['Menu'])){
+                    ?>
+                    <table>
+                        <?php
+                            foreach($category['Menu'] as $menu){
+                                echo '<tr><td><img src="'.(Configure::read('BaseURL')).'uploads/'.$menu['img'].'" title="'.$menu['title'].'"/>'.
+                                        '<div>'.$menu['title'].'</div></td></tr>';
+                            }
+                        ?>
+                    </table>
+                        <?php }?>
 		</dd>
 		<dt><?php echo __('Title'); ?></dt>
 		<dd>

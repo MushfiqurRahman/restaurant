@@ -67,28 +67,27 @@ class Subcategory extends AppModel {
 			'order' => ''
 		)
 	);
-
-/**
- * hasAndBelongsToMany associations
+        
+        /**
+ * hasMany associations
  *
  * @var array
  */
-	public $hasAndBelongsToMany = array(
+	public $hasMany = array(
 		'Item' => array(
 			'className' => 'Item',
-			'joinTable' => 'items_subcategories',
 			'foreignKey' => 'subcategory_id',
-			'associationForeignKey' => 'item_id',
-			'unique' => 'keepExisting',
+			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
 			'limit' => '',
 			'offset' => '',
+			'exclusive' => '',
 			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => ''
+			'counterQuery' => ''
 		)
 	);
+
 
 }
