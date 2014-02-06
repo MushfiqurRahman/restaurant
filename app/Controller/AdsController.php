@@ -40,8 +40,9 @@ class AdsController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$response = $this->Ad->moveFile($this->request->data['Ad']['img']);
-			if($response['success']) {
-				$this->request->data['Ad']['img'] = $response['message'];
+			if($response[0]['success']) {
+				$this->request->data['Ad']['img'] = $response[0]['message'];
+                                $this->request->data['Ad']['thumb_img'] = $response[1]['message'];
 				$this->Ad->create();
 				if ($this->Ad->save($this->request->data)) {
 					$this->Session->setFlash(__('The ad has been saved'));
@@ -50,10 +51,6 @@ class AdsController extends AppController {
 					$this->Session->setFlash(__('The ad could not be saved. Please, try again.'));
 				}
 			}
-
-			// pr($this->request->data);
-			// exit;
-			
 		}
 	}
 
@@ -74,25 +71,23 @@ class AdsController extends AppController {
 
 			}else {
 				$response = $this->Ad->moveFile($this->request->data['Ad']['img']);	
-				if($response['success']) {
-					$this->request->data['Ad']['img'] = $response['message'];
-					
-					if ($this->Ad->save($this->request->data)) {
-						$this->Session->setFlash(__('The ad has been saved'));
-						$this->redirect(array('action' => 'index'));
-					} else {
-						$this->Session->setFlash(__('The ad could not be saved. Please, try again.'));
-					}
-				}
-			}
-			
-
-
-			
-		} else {
+				if($response[0]['success']) {
+					$this->request->data['Ad']['img'] = $response[0]['message'];
+                                        $this->request->data['Ad']['thumb_img'] = $response[1]['message'];
+				}else{
+                                    $this->Session->setFlash(__('The Ad could not be saved! Please try agian.'));
+                                }
+                        }
+                        if ($this->Ad->save($this->request->data)) {
+                                $this->Session->setFlash(__('The ad has been saved'));
+                                $this->redirect(array('action' => 'index'));
+                        } else {
+                                $this->Session->setFlash(__('The ad could not be saved. Please, try again.'));
+                        }
+		}else {
 			$options = array('conditions' => array('Ad.' . $this->Ad->primaryKey => $id));
 			$this->request->data = $this->Ad->find('first', $options);
-		}
+                }
 	}
 
 /**

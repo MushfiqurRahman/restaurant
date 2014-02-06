@@ -77,10 +77,20 @@ class Item extends AppModel {
  *
  * @var array
  */
-	public $belongsTo = array(
-		'Subcategory' => array(
-			'className' => 'Subcategory',
-			'foreignKey' => 'subcategory_id',
+//	public $belongsTo = array(
+//		'Subcategory' => array(
+//			'className' => 'Subcategory',
+//			'foreignKey' => 'subcategory_id',
+//			'conditions' => '',
+//			'fields' => '',
+//			'order' => ''
+//		)
+//	);
+        
+        public $belongsTo = array(
+		'Category' => array(
+			'className' => 'Category',
+			'foreignKey' => 'category_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''

@@ -61,9 +61,35 @@ class Category extends AppModel {
  *
  * @var array
  */
-	public $hasMany = array(
-		'Subcategory' => array(
-			'className' => 'Subcategory',
+//	public $hasMany = array(
+//		'Subcategory' => array(
+//			'className' => 'Subcategory',
+//			'foreignKey' => 'category_id',
+//			'dependent' => false,
+//			'conditions' => '',
+//			'fields' => '',
+//			'order' => '',
+//			'limit' => '',
+//			'offset' => '',
+//			'exclusive' => '',
+//			'finderQuery' => '',
+//			'counterQuery' => ''
+//		)
+//	);
+        
+        public $belongsTo = array(
+		'Menu' => array(
+			'className' => 'Menu',
+			'foreignKey' => 'menu_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		)
+	);
+        
+        public $hasMany = array(
+		'Item' => array(
+			'className' => 'Item',
 			'foreignKey' => 'category_id',
 			'dependent' => false,
 			'conditions' => '',
@@ -77,22 +103,22 @@ class Category extends AppModel {
 		)
 	);
         
-        public $hasAndBelongsToMany = array(
-		'Menu' => array(
-			'className' => 'Menu',
-			'joinTable' => 'categories_menus',
-			'foreignKey' => 'category_id',
-			'associationForeignKey' => 'menu_id',
-			'unique' => 'keepExisting',
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => ''
-		)
-	);
+//        public $hasAndBelongsToMany = array(
+//		'Menu' => array(
+//			'className' => 'Menu',
+//			'joinTable' => 'categories_menus',
+//			'foreignKey' => 'category_id',
+//			'associationForeignKey' => 'menu_id',
+//			'unique' => 'keepExisting',
+//			'conditions' => '',
+//			'fields' => '',
+//			'order' => '',
+//			'limit' => '',
+//			'offset' => '',
+//			'finderQuery' => '',
+//			'deleteQuery' => '',
+//			'insertQuery' => ''
+//		)
+//	);
 
 }

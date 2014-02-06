@@ -13,7 +13,7 @@ class ItemsController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->Item->recursive = 0;
+		//$this->Item->recursive = 0;
 		$this->set('items', $this->paginate());
 	}
 
@@ -38,7 +38,7 @@ class ItemsController extends AppController {
  * @return void
  */
 	public function add() {
-		if ($this->request->is('post')) {
+		if ($this->request->is('post')) { //pr($this->data);exit;
 			
 			$response = $this->Item->moveFile($this->request->data['Item']['img']);
 			if($response[0]['success']) {
@@ -54,8 +54,10 @@ class ItemsController extends AppController {
 			}
 
 		}
-		$subcategories = $this->Item->Subcategory->find('list');
-		$this->set(compact('subcategories'));
+//		$subcategories = $this->Item->Subcategory->find('list');
+//		$this->set(compact('subcategories'));
+                $categories = $this->Item->Category->find('list');
+		$this->set(compact('categories'));
 	}
 
 /**
@@ -69,33 +71,36 @@ class ItemsController extends AppController {
 		if (!$this->Item->exists($id)) {
 			throw new NotFoundException(__('Invalid item'));
 		}
-		if ($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) { 
+                    $fieldList = array('category_id', 'title','descr','ingredients','price','discount','is_featured');
 			
 			if(!$this->request->data['Item']['img']) {
 				unset($this->request->data['Item']['img']);
-
 			}else {
 				$response = $this->Item->moveFile($this->request->data['Item']['img']);	
 				if($response[0]['success']) {
 					$this->request->data['Item']['img'] = $response[0]['message'];
                                         $this->request->data['Item']['thumb_img'] = $response[1]['message'];
-					
-					if ($this->Item->save($this->request->data)) {
-						$this->Session->setFlash(__('The Item has been saved'));
-						$this->redirect(array('action' => 'index'));
-					} else {
-						$this->Session->setFlash(__('The Item could not be saved. Please, try again.'));
-					}
-				}
-			}
-
-
+                                        $fieldList[] = 'img';
+                                        $fieldList[] = 'thumb_img';
+				}else{
+                                    $this->Session->setFlash(__('The Item could not be saved! Please try again.'));
+                                }
+			}                        
+                        if ($this->Item->save($this->request->data, true, $fieldList)) {
+                                $this->Session->setFlash(__('The Item has been saved'));
+                                $this->redirect(array('action' => 'index'));
+                        } else {
+                                $this->Session->setFlash(__('The Item could not be saved. Please, try again.'));
+                        }
 		} else {
 			$options = array('conditions' => array('Item.' . $this->Item->primaryKey => $id));
 			$this->request->data = $this->Item->find('first', $options);
 		}
-		$subcategories = $this->Item->Subcategory->find('list');
-		$this->set(compact('subcategories'));
+//		$subcategories = $this->Item->Subcategory->find('list');
+//		$this->set(compact('subcategories'));
+                $categories = $this->Item->Category->find('list');
+		$this->set(compact('categories'));
 	}
 
 /**

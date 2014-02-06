@@ -51,25 +51,53 @@ class Menu extends AppModel {
 			),
 		),
 	);
-
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
-
-        public $hasAndBelongsToMany = array(
+        
+        public $hasMany = array(
 		'Category' => array(
 			'className' => 'Category',
-			'joinTable' => 'categories_menus',
 			'foreignKey' => 'menu_id',
-			'associationForeignKey' => 'category_id',
-			'unique' => 'keepExisting',
+			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
 			'limit' => '',
 			'offset' => '',
+			'exclusive' => '',
 			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => ''
+			'counterQuery' => ''
 		)
 	);
+
+	//The Associations below have been created with all possible keys, those that are not needed can be removed
+
+//        public $hasAndBelongsToMany = array(
+//		'Category' => array(
+//			'className' => 'Category',
+//			'joinTable' => 'categories_menus',
+//			'foreignKey' => 'menu_id',
+//			'associationForeignKey' => 'category_id',
+//			'unique' => 'keepExisting',
+//			'conditions' => '',
+//			'fields' => '',
+//			'order' => '',
+//			'limit' => '',
+//			'offset' => '',
+//			'finderQuery' => '',
+//			'deleteQuery' => '',
+//			'insertQuery' => ''
+//		)
+//	);
+        
+        /**
+         * Get all the menus
+         * 
+         * @param type $recursive_level
+         * @return type
+         */
+//        public function get_menus( $recursive_level = 0 ){            
+//            return $this->find('all', array('fields' => 
+//                array('id', 'title', 'descr', 'thumb_img'),
+//                'recursive' => $recursive_level));
+//        }
 
 }

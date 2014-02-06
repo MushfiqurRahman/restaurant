@@ -13,6 +13,7 @@ class CategoriesController extends AppController {
  * @return void
  */
 	public function index() {
+            //pr($this->paginate());exit;
 		$this->set('categories', $this->paginate());
 	}
 
