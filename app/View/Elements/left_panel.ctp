@@ -10,6 +10,7 @@
 		<li><?php echo $this->Html->link(__('Tables'), array('controller' => 'tables','action' => 'index')); ?></li>
 		<li><?php echo $this->Html->link(__('Waiters'), array('controller' => 'waiters','action' => 'index')); ?></li>
 		<li><?php echo $this->Html->link(__('Ads'), array('controller' => 'ads','action' => 'index')); ?></li>
+                <li><?php echo $this->Html->link(__('Settings'), array('controller' => 'settings','action' => 'index')); ?></li>
 	</ul>
 
 	<ul style="margin-top: 100px;">

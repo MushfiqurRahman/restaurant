@@ -4,7 +4,7 @@
 		<legend><?php echo __('Edit Setting'); ?></legend>
 	<?php
 		echo $this->Form->input('id');
-		echo $this->Form->input('variable_name');
+		//echo $this->Form->input('variable_name');
 		echo $this->Form->input('value');
 		echo $this->Form->input('label');
 	?>

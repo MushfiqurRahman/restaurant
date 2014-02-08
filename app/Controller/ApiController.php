@@ -13,12 +13,10 @@
  */
 class ApiController extends AppController {
     
-    public $uses = array('Waiter', 'Menu', 'Category');
-    
     public function beforeFilter(){
         parent::beforeFilter();
         $this->layout = $this->autoRender = false;
-        $this->Auth->allow('waiter_login');
+        $this->Auth->allow(array('waiter_login','get_menu','get_items','make_order','print_order'));
     }
     
     /**
@@ -26,69 +24,70 @@ class ApiController extends AppController {
      */
     public function waiter_login(){
         $this->loadModel('Waiter');
-        $waiterId = $this->Waiter->find('first', array('conditions' => array('Waiter.password' => 
-            $this->request->data['password'])));
+        $waiterId = $this->Waiter->field('id', array('Waiter.password' => $this->request->data['password']));
         
-        if( $waiterId ){
+        if( $waiterId ){ 
             $response['success'] = true;
-            $response['waiter_id'] = $waiter['Waiter']['id'];
-            $response['Menu'] = $this->_menus(0);
+            $response['waiter_id'] = $waiterId;
+            
+            //bringing menu with category
+            $response['menus'] = $this->_menus(2);
+            $response['ads'] = $this->_ads();
+            $response['settings'] = $this->_settings();
         }else{
             $response['success'] = false;
             $response['message'] = 'Login Failed! Invaid Waiter Password.';
         }
-        echo $response;
+        $this->log(print_r($response, true),'error');
+        echo json_encode($response);
     }
     
     protected function _menus( $recursive_level = 0){
         $this->loadModel('Menu');
-        return $this->Menu->get_menus($recursive_level);
+        $this->Menu->Behaviors->load('Containable');
+        //return $this->Menu->find('all', array('recursive' => $recursive_level));
+        return $this->Menu->find('all', array('contain' => array(
+            'Category' => array(
+                'fields' => array('id','title','descr','thumb_img'),
+                'Item' => array(
+                    'fields' => array('id','title','descr','ingredients','thumb_img','price','discount'),
+                )
+            ),            
+        ),'fields' => array('id','title'),));
+    }
+    
+    protected function _ads() {
+        $this->loadModel('Ad');
+        return $this->Ad->get_random_add();
+    }
+    
+    protected function _settings() {
+        $this->loadModel('Setting');
+        return $this->Setting->find('all');
     }
     
     
     public function get_menu(){
-        $menus = $this->_menus(0);
+        $menus = $this->_menus(1);
         $this->log(print_r($menus, true),'error');
         echo json_encode($menus);
-    }
-    
-    public function get_category(){
-        $this->loadModel('Category');
-        $categoryIds = $this->Category->query('select category_id FROM categories_menus '
-                . 'WHERE menu_id='.$this->request->data['menu_id']);
-        
-        $this->log(print_r($categoryIds, true),'error');
-        
-        $categories = $this->Category->find('all', array('fields' => 
-            array('id', 'title', 'descr', 'thumb_img'),
-            'conditions' => array('')));
-        
-        echo json_encode($categories);
-    }
-    
-    public function get_subcategory(){
-        $this->loadModel('Subcategory');
-        $this->Subcategory->recursive = 0;
-        $subcategories = $this->Subcategory->find('all', array('fields' => array(
-            'id', 'title','descr', 'thumb_img'), 'recursive' => 0));
-        echo json_encode($subcategories);
-        
-        $this->log(print_r($subcategories, true), 'error');
     }
     
     public function get_items(){
         $this->loadModel('Item');
         $items = $this->Item->find('all', array('conditions' => array(
-            'subcategory_id' => $this->request->data['subcategory_id']),
+            'category_id' => $this->request->data['category_id']),
             'recursive' => 0));
         echo json_encode($items);
     }
     
     public function make_order(){
-        
-    }    
+        $this->loadModel('Order');
+        $this->Order->keepOrder($this->request->data);
+    }
     
-    public function get_all_data(){
-        
+    public function print_order(){
+        $this->loadModel('Order');
+        //$this->Order->printOrder()
     }
 }

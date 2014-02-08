@@ -102,4 +102,13 @@ class Order extends AppModel {
 			'order' => ''
 		)
 	);
+        
+        public function keepOrder($data){
+//            $order['Order'][''] = $data[''];
+//            $order['Order'][''] = $data[''];
+//            $order['Order'][''] = $data[''];
+//            $order['Order'][''] = $data[''];
+//            $order['Order'][''] = $data[''];
+//            $order['Order'][''] = $data[''];
+        }
 }
