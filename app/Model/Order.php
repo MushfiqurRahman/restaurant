@@ -103,12 +103,36 @@ class Order extends AppModel {
 		)
 	);
         
-        public function keepOrder($data){
-//            $order['Order'][''] = $data[''];
-//            $order['Order'][''] = $data[''];
-//            $order['Order'][''] = $data[''];
-//            $order['Order'][''] = $data[''];
-//            $order['Order'][''] = $data[''];
-//            $order['Order'][''] = $data[''];
+        /**
+         * 
+         * @param type $data
+         */
+        public function keepOrder($data){                        
+            $decoded = json_decode($data['order_details']);
+            $items = array();
+            $i = 0;
+            $totalPrice = 0;
+            foreach($decoded as $itm){
+                if( !empty($itm) ){
+                    if( property_exists($itm, 'waiter_n_table') ){
+                        $temp = $itm->waiter_n_table;
+                        $order['Order']['waiter_id'] = $temp->waiter_id;
+                        $order['Order']['table_id'] = $temp->table_id;
+                    }else{
+                        $items[$i]['id'] = $itm->id;
+                        $items[$i]['ingredients'] = $itm->ingredients;
+                        $items[$i]['quantity'] = $itm->quantity;
+                        $totalPrice += ($items[$i]['quantity']*$itm->price);
+                    }
+                    $i++;
+                }
+            }
+            $order['Order']['items'] = serialize($items);
+            $order['Order']['grand_total'] = $totalPrice;
+            $order['Order']['comment'] = '';
+            
+            $this->log(print_r($order,true),'error');
+            
+            //$this->save($order);
         }
 }

@@ -50,6 +50,6 @@ class Ad extends AppModel {
 	);
         
         public function get_random_add(){
-            return $this->find('first', array('conditions' => array()));
+            return $this->find('first', array('conditions' => array('status' => 1)));
         }
 }

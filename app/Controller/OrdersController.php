@@ -14,7 +14,13 @@ class OrdersController extends AppController {
  */
 	public function index() {
 		$this->Order->recursive = 0;
-		$this->set('orders', $this->paginate());
+		$orders = $this->paginate();
+                //here have to format the order
+//                foreach($orders as $ord){
+//                    
+//                }
+                
+                $this->set('orders',$orders);
 	}
 
 /**

@@ -6,6 +6,7 @@
 			<th><?php echo $this->Paginator->sort('table_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('waiter_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('items'); ?></th>
+                        <th><?php echo $this->Paginator->sort('ingredients'); ?></th>
 			<th><?php echo $this->Paginator->sort('grand_total'); ?></th>
 			<th><?php echo $this->Paginator->sort('is_printed'); ?></th>
 			<th><?php echo $this->Paginator->sort('created'); ?></th>
@@ -21,7 +22,7 @@
 		<td>
 			<?php echo $this->Html->link($order['Waiter']['name'], array('controller' => 'waiters', 'action' => 'view', $order['Waiter']['id'])); ?>
 		</td>
-		<td><?php echo h($order['Order']['items']); ?>&nbsp;</td>
+                <td><?php print_r(unserialize($order['Order']['items'])); ?>&nbsp;</td>
 		<td><?php echo h($order['Order']['grand_total']); ?>&nbsp;</td>
 		<td><?php echo h($order['Order']['is_printed']); ?>&nbsp;</td>
 		<td><?php echo h($order['Order']['created']); ?>&nbsp;</td>

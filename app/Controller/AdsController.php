@@ -38,7 +38,7 @@ class AdsController extends AppController {
  * @return void
  */
 	public function add() {
-		if ($this->request->is('post')) {
+		if ($this->request->is('post')) { //pr($this->data);exit;
 			$response = $this->Ad->moveFile($this->request->data['Ad']['img']);
 			if($response[0]['success']) {
 				$this->request->data['Ad']['img'] = $response[0]['message'];
@@ -65,7 +65,7 @@ class AdsController extends AppController {
 		if (!$this->Ad->exists($id)) {
 			throw new NotFoundException(__('Invalid ad'));
 		}
-		if ($this->request->is('post') || $this->request->is('put')) {
+		if ($this->request->is('post') || $this->request->is('put')) { 
 			if(!$this->request->data['Ad']['img']) {
 				unset($this->request->data['Ad']['img']);
 

@@ -38,7 +38,7 @@ class ApiController extends AppController {
             $response['success'] = false;
             $response['message'] = 'Login Failed! Invaid Waiter Password.';
         }
-        $this->log(print_r($response, true),'error');
+        //$this->log(print_r($response, true),'error');
         echo json_encode($response);
     }
     
@@ -50,7 +50,7 @@ class ApiController extends AppController {
             'Category' => array(
                 'fields' => array('id','title','descr','thumb_img'),
                 'Item' => array(
-                    'fields' => array('id','title','descr','ingredients','thumb_img','price','discount'),
+                    'fields' => array('id','title','descr','ingredients','thumb_img','price','discount', 'is_featured'),
                 )
             ),            
         ),'fields' => array('id','title'),));
@@ -69,7 +69,7 @@ class ApiController extends AppController {
     
     public function get_menu(){
         $menus = $this->_menus(1);
-        $this->log(print_r($menus, true),'error');
+        //$this->log(print_r($menus, true),'error');
         echo json_encode($menus);
     }
     
@@ -82,6 +82,10 @@ class ApiController extends AppController {
     }
     
     public function make_order(){
+        $decoded = json_decode($this->request->data['order_details']);
+        $this->log(print_r($this->request->data['order_details'],true),'error');
+        
+        $this->log(print_r($decoded,true),'error');
         $this->loadModel('Order');
         $this->Order->keepOrder($this->request->data);
     }
