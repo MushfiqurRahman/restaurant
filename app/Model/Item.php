@@ -96,4 +96,19 @@ class Item extends AppModel {
 			'order' => ''
 		)
 	);
+        
+        /**
+         * 
+         * @param type $order
+         */
+        public function orderedItemsTitle( &$order) {
+            $itemList = $this->find('list',array('fields' => array('id','title',)));
+            
+            foreach($order as $k => $v){
+                $order[$k]['Order']['items'] = unserialize($order[$k]['Order']['items']);
+                foreach($order[$k]['Order']['items'] as $i => $val){
+                    $order[$k]['Order']['items'][$i]['title'] = $itemList[ $val['id'] ];
+                }
+            }
+        }
 }

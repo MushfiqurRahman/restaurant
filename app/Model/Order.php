@@ -133,6 +133,9 @@ class Order extends AppModel {
             
             $this->log(print_r($order,true),'error');
             
-            //$this->save($order);
+            if( $this->save($order) ){
+                return true;
+            }
+            return false;
         }
 }

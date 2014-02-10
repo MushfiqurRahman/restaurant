@@ -82,12 +82,23 @@ class ApiController extends AppController {
     }
     
     public function make_order(){
+        $this->layout = false;
+        $this->autoRender = false;
+        
         $decoded = json_decode($this->request->data['order_details']);
         $this->log(print_r($this->request->data['order_details'],true),'error');
         
-        $this->log(print_r($decoded,true),'error');
+        //$this->log(print_r($decoded,true),'error');
         $this->loadModel('Order');
-        $this->Order->keepOrder($this->request->data);
+        $response = array();
+        if( $this->Order->keepOrder($this->request->data) ){
+            $response['success'] = true;
+            $response['message'] = 'Order Accepted. Thanks for ordering.';
+        }else{
+            $response['success'] = false;
+            $response['message'] = 'Order Failed! Please try again.';
+        }
+        echo json_encode($response);
     }
     
     public function print_order(){
