@@ -101,14 +101,17 @@ class Item extends AppModel {
          * 
          * @param type $order
          */
-        public function orderedItemsTitle( &$order) {
+        public function orderedItems( &$order) {
             $itemList = $this->find('list',array('fields' => array('id','title',)));
             
             foreach($order as $k => $v){
-                $order[$k]['Order']['items'] = unserialize($order[$k]['Order']['items']);
+                $order[$k]['Order']['items'] = unserialize(base64_decode($order[$k]['Order']['items']));
+                //$this->log(print_r($order[$k]['Order']['items'],true),'error');
+                
                 foreach($order[$k]['Order']['items'] as $i => $val){
                     $order[$k]['Order']['items'][$i]['title'] = $itemList[ $val['id'] ];
                 }
             }
+            //$this->log(print_r($order, true),'error');
         }
 }

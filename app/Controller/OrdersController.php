@@ -17,7 +17,7 @@ class OrdersController extends AppController {
                 $this->paginate = array('order' => array('Order.created' => 'DESC'));
 		$orders = $this->paginate();
                 $this->loadModel('Item');
-                $this->Item->orderedItemsTitle($orders);
+                $this->Item->orderedItems($orders);
                 
                 //pr($orders);exit;
                 

@@ -127,11 +127,11 @@ class Order extends AppModel {
                     $i++;
                 }
             }
-            $order['Order']['items'] = serialize($items);
+            $order['Order']['items'] = base64_encode(serialize($items));
             $order['Order']['grand_total'] = $totalPrice;
             $order['Order']['comment'] = '';
             
-            $this->log(print_r($order,true),'error');
+            //$this->log(print_r($order,true),'error');
             
             if( $this->save($order) ){
                 return true;
