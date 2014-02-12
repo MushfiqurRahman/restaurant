@@ -86,7 +86,7 @@ class ApiController extends AppController {
         $this->autoRender = false;
         
         $decoded = json_decode($this->request->data['order_details']);
-        $this->log(print_r($this->request->data['order_details'],true),'error');
+        //$this->log(print_r($this->request->data['order_details'],true),'error');
         
         //$this->log(print_r($decoded,true),'error');
         $this->loadModel('Order');
